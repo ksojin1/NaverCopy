@@ -33,6 +33,7 @@ public class BoardAddServlet extends HttpServlet{
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		String sql = "";
+		int result = 0;
 		
 		try {
 			
@@ -45,7 +46,7 @@ public class BoardAddServlet extends HttpServlet{
 			
 			sql += "INSERT INTO BOARD";
 			sql += " VALUE(BNO, MID, TITLE, CONTENT, CRE_DATE, MOD_DATE)";
-			sql += " VALUES(BOARD_MNO_SEQ.NEXTVAL, ?, ?";
+			sql += " VALUES(BOARD_BNO_SEQ.NEXTVAL, ?, ?";
 			sql += " , ?, SYSDATE, SYSDATE)";
 
 			pstmt = conn.prepareStatement(sql);
@@ -54,7 +55,7 @@ public class BoardAddServlet extends HttpServlet{
 			pstmt.setString(2, title);
 			pstmt.setString(3, content);
 
-			int result = pstmt.executeUpdate();
+			result = pstmt.executeUpdate();
 			
 			if(result == 0) {
 				System.out.println("게시판 추가 실패");

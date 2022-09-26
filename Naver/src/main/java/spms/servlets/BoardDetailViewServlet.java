@@ -5,6 +5,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Date;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -15,10 +17,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import spms.dto.BoardDto;
-import spms.dto.MemberDto;
 
-@WebServlet(value="/board/update")
-public class BoardUpdateServlet extends HttpServlet{
+@WebServlet(value="/board/detail")
+public class BoardDetailViewServlet extends HttpServlet{
 	
 	private static final long serialVersionUID = 1L;
 
@@ -26,14 +27,11 @@ public class BoardUpdateServlet extends HttpServlet{
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) 
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		
 		Connection conn = null;
 		PreparedStatement pstmt = null;
+		String sql = "";
 		ResultSet rs = null;
 		BoardDto boardDto = null;
-		
-		String sql = "";
-		
 		
 		try {
 			
@@ -42,36 +40,38 @@ public class BoardUpdateServlet extends HttpServlet{
 			ServletContext sc = this.getServletContext();
 			conn = (Connection)sc.getAttribute("conn");
 			
-			sql = "SELECT BNO, MID, TITLE, CONTENT";
+			sql = "SELECT MID, TITLE, CONTENT, CRE_DATE, MOD_DATE";
 			sql += " FROM BOARD";
 			sql += " WHERE BNO = ?";
-			
+
 			pstmt = conn.prepareStatement(sql);
-
+			
 			pstmt.setInt(1, no);
-
+			
 			rs = pstmt.executeQuery();
 			
-			String userId = "";
+			String mId = "";
 			String title = "";
 			String content = "";
+			Date creDate = null;
+			Date modDate = null;
 			
 			while (rs.next()) {
-				
-				userId = rs.getString("MID");
+				mId = rs.getString("MID");
 				title = rs.getString("TITLE");
 				content = rs.getString("CONTENT");
+				creDate = rs.getDate("CRE_DATE");
+				modDate = rs.getDate("MOD_DATE");
 				
-				boardDto = new BoardDto(no, userId, title, content);
+				boardDto = new BoardDto(no, mId, title, content, creDate, modDate);
 			}
 			
 			req.setAttribute("boardDto", boardDto);
 			
-			RequestDispatcher rd =
-					req.getRequestDispatcher("/board/BoardUpdate.jsp");
+			RequestDispatcher dispatcher =
+					req.getRequestDispatcher("./BoardDetailView.jsp");
 			
-			rd.forward(req, res);
-			
+			dispatcher.forward(req, res);
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -95,60 +95,12 @@ public class BoardUpdateServlet extends HttpServlet{
 				}
 			}
 		}
-		
 	}
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) 
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		Connection conn = null;
-		PreparedStatement pstmt = null;
-		String sql = "";
-		
-		try {
-			int no = Integer.parseInt(req.getParameter("no"));
-			String userId = req.getParameter("userId");
-			String title = req.getParameter("title");
-			String content = req.getParameter("content");
-			
-			//BoardDto boardDto = new BoardDto(no, userId, title, content);
-			
-			ServletContext sc = this.getServletContext();
-			conn = (Connection)sc.getAttribute("conn");
-
-			sql += "UPDATE BOARD";
-			sql += " SET TITLE=?, CONTENT=?, MOD_DATE=SYSDATE";
-			sql += " WHERE BNO=?";
-
-			pstmt = conn.prepareStatement(sql);
-
-			pstmt.setString(1, title);
-			pstmt.setString(2, content);
-			pstmt.setInt(3, no);
-
-			int result = pstmt.executeUpdate();
-			
-			if(result == 0) {
-				System.out.println("게시판 수정 실패");
-			}
-			
-			res.sendRedirect("./list");
-			
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-			
-		} finally {
-			
-			if (pstmt != null) {
-				try {
-					pstmt.close();
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		}
-		
+		super.doPost(req, res);
 	}
 }
