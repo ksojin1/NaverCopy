@@ -7,7 +7,7 @@ public class MemberDto {
 	private int no = 0;
 	private String id = "";
 	private String name = "";
-	private Date birthdate = null;
+	private String birthdate = "";
 	private String email = "";
 	private Date createDate = null;
 	private Date modifiedDate = null;
@@ -18,7 +18,7 @@ public class MemberDto {
 	}
 
 
-	public MemberDto(int no, String id, String name, Date birthdate, 
+	public MemberDto(int no, String id, String name, String birthdate, 
 			String email, Date createDate, Date modifiedDate) {
 		super();
 		this.no = no;
@@ -61,12 +61,12 @@ public class MemberDto {
 	}
 
 
-	public Date getBirthdate() {
+	public String getBirthdate() {
 		return birthdate;
 	}
 
 
-	public void setBirthdate(Date birthdate) {
+	public void setBirthdate(String birthdate) {
 		this.birthdate = birthdate;
 	}
 
@@ -106,5 +106,8 @@ public class MemberDto {
 		return "MemberDto [no=" + no + ", id=" + id + ", name=" + name + ", birthdate=" + birthdate + ", email=" + email
 				+ ", createDate=" + createDate + ", modifiedDate=" + modifiedDate + "]";
 	}
+
+
+	
 	
 }
