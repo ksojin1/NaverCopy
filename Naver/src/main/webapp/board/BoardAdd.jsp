@@ -1,19 +1,19 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="EUC-KR">
-<title>°Ô½ÃÆÇ ÀÛ¼º</title>
+<title>ê²Œì‹œíŒ ìž‘ì„±</title>
 </head>
 <body>
-	<h1>±Û¾²±â</h1>
-	<form>
-		ÀÛ¼ºÀÚ	<input type="text" name='mid'><br>
-		Á¦¸ñ		<input type="text" name='title'><br>
-		³»¿ë		<input type="text" name='content'><br>
-		<input type='submit' value='ÀúÀå'>
-		<input type='button' value='Ãë¼Ò' 
+	<h1>ê¸€ì“°ê¸°</h1>
+	<form action='./add' method='post'>
+		ìž‘ì„±ìž	<input type="text" name='mid'><br>
+		ì œëª©		<input type="text" name='title'><br>
+		ë‚´ìš©		<input type="text" name='content'><br>
+		<input type='submit' value='ì €ìž¥'>
+		<input type='button' value='ì·¨ì†Œ' 
 			onclick="location.href='/board/list'">
 	</form>
 </body>
