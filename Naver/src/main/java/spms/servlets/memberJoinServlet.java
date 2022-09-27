@@ -77,7 +77,7 @@ public class memberJoinServlet extends HttpServlet{
 			if(result == 0) {
 				System.out.println("회원가입 실패");
 			}
-			resp.sendRedirect("./login");
+			resp.sendRedirect("../auth/login");
 			
 			
 		} catch (Exception e) {

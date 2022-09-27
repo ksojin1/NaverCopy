@@ -105,10 +105,10 @@
 				
 				
 				<!-- 로그인 세션 완료 되면 수정 -->
-				<a id='updateBtn' href='./update?no=${boardDto.getNo()}'>수정하기</a>
-	<%-- 		<c:if test='${mid == boardDto.userId}'> --%>
-	<!-- 			<input type='submit' value='수정'> -->
-	<%-- 		</c:if> --%>
+				
+	 		<c:if test='${memberDto.id == boardDto.userId}'>
+	 			<a id='updateBtn' href='./update?no=${boardDto.getNo()}'>수정하기</a>
+	 		</c:if>
 			</div>
 		</div>
 	</div>

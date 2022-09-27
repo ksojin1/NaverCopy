@@ -92,7 +92,7 @@
 
 			<h2 id='userId'>작성자</h2>
 			<input id='idInput' type="text" name='mid' readonly
-				value="${boardDto.userId}"><br>
+				value="${memberDto.getId()}"><br>
 
 			<h2 id='title'>제목</h2>
 			<input id='titleInput' type="text" name='title'><br>

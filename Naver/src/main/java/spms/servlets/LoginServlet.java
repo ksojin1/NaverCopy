@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import javafx.scene.web.WebHistory;
 import spms.dto.MemberDto;
 
 //import spms.dao.MemberDao;
@@ -74,15 +75,14 @@ public class LoginServlet extends HttpServlet {
 				memberDto.setId(mid);
 				memberDto.setName(name);
 				session.setAttribute("memberDto", memberDto);
-				session.setAttribute("loginCheck", true);
-				session.setAttribute("mid", memberDto.getId());
 
+				System.out.println("로그인 성공");
+				
 				res.sendRedirect("../board/list");
 				
 			} else {
-				session.setAttribute("loginCheck", false);
-				RequestDispatcher rd = req.getRequestDispatcher("./LoginForm.jsp");
-				rd.forward(req, res);
+				System.out.println("로그인 실패");
+				res.sendRedirect("./LoginCk.jsp");
 			} 
 				
 		} catch (Exception e) {

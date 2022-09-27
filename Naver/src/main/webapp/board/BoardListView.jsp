@@ -42,9 +42,8 @@
 		position: relative;
 	}
 	
-	#loginBtn{
-		position: absolute;	
-		width: 90px;
+	#userDiv{
+		position: absolute;
 		top: 0px;
 		right: 90px;
 	}
@@ -53,6 +52,10 @@
 		width: 90%;
 		margin: 50px auto;
 		position: relative;
+	}
+	
+	#loginBtn{
+		margin-left: 10px;
 	}
 	
 	#addBtn{
@@ -82,6 +85,7 @@
 		height: 35px;
 	}
 	
+	
 </style>
 
 </head>
@@ -89,7 +93,10 @@
 	<div id='container'>
 		<div id='titleDiv'>
 			<h2 id='boardTitle'>게시판 목록</h2>
-			<a class='btn' id='loginBtn' href='#'>로그아웃</a>
+			<div id='userDiv'>
+				<span id='userId'>${memberDto.getId()}</span>
+				<a class='btn' id='loginBtn' href='../auth/logout'>로그아웃</a>
+			</div>
 		</div>
 		<div id='listTableDiv'>
 			<table>

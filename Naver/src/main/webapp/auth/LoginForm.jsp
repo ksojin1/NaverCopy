@@ -55,7 +55,7 @@
 	
 	#loginBtnSizeAjdust {
 		width: 400px; height: 50px; font-size: 18px; font-weight: bold;
-		background-color: #03C75A; color: #fff; cursor: pointer;
+		background-color: #03C75A; color: #fff;
 		margin-bottom: 5px;
 	}
 	
@@ -70,15 +70,22 @@
 		var pwdObj = document.getElementById('boxSizeAjdust2');
 		var alertMessageObj = document.getElementById('alertMessage');
 		var loginBtnSizeAjdustObj = document.getElementById('loginBtnSizeAjdust');
-
+		
 		loginBtnSizeAjdustObj.addEventListener('click', function() {
 			if (idObj.value == '') {
 				event.preventDefault();
+				alertMessageObj.style.visibility = 'visible';
 				alertMessageObj.innerHTML = '<strong>아이디</strong>를 입력해주세요.';
 
 			} else if (pwdObj.value == '') {
 				event.preventDefault();
+				alertMessageObj.style.visibility = 'visible';
 				alertMessageObj.innerHTML = '<strong>비밀번호</strong>를 입력해주세요.';
+			} else {
+				alertMessageObj.style.visibility = 'visible';
+// 				alertMessageObj.innerHTML = 
+// 					'아이디(로그인 전용 아이디) 또는 비밀번호를 잘못 입력했습니다.'
+// 					+ '<br>입력하신 내용을 다시 확인해주세요.';
 			}
 		});
 	}
@@ -90,16 +97,16 @@
 <div>
 	
 	<div id='mainLogo'>
-		<a href="http://localhost:8090/Naver/auth/login" 
+		<a href="./login" 
 			title="메인으로 이동" target="_self">
-		<img src="./NaverLoginLogo.PNG" alt=""></a>
+		<img src="./NaverLoginLogo.png" alt=""></a>
 	</div>
 	
 	<div id='titleForm'>
 		<form action="./login" method="post">
 			<div>
 				<ul id='loginMethodList'>
-					<li><a href="./LoginForm.jsp">ID 로그인</a>&nbsp;</li>
+					<li><a href="./login">ID 로그인</a>&nbsp;</li>
 					<li><a href="./singleUsePwd.jsp">일회용 번호</a>&nbsp;</li>
 					<li><a href="./scanQrCode.jsp">QR코드</a></li>
 				</ul>
@@ -118,11 +125,12 @@
 				<span onclick="ipProtectFnc();" style="font-size: 14px; color: #888; 
 					cursor: pointer;">IP보안</span>
 			</div>
-
-			<c:if test="${loginCheck == false}">
-				<span id="alertMessage">'아이디(로그인 전용 아이디) 또는 비밀번호를 잘못 입력했습니다.
-				<br>입력하신 내용을 다시 확인해주세요.</span>
-			</c:if>
+			
+			<span id="alertMessage" style="visibility:hidden">아이디(로그인 전용 아이디) 또는 비밀번호를 잘못 입력했습니다.'
+ 					<br>입력하신 내용을 다시 확인해주세요.</span>
+<%-- 			<c:if test='${memberDto.id == null}'> --%>
+<!-- 				<span id="alertMessage"></span> -->
+<%-- 			</c:if> --%>
 			
 			<br>
 			<br>
@@ -139,7 +147,7 @@
 			<li>I</li>
 			<li><a href="./findId.jsp">아이디 찾기</a>&nbsp;</li>
 			<li>I</li>
-			<li><a href="./member/Add.jsp">회원가입</a></li>
+			<li><a href="../member/add">회원가입</a></li>
 		</ul>
 	</div>
 </div>
