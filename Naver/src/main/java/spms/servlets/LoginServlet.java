@@ -15,17 +15,20 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-//import spms.dao.MemberDao;
-//import spms.dto.MemberDto;
+import spms.dto.MemberDto;
 
-@WebServlet(value = "/member/login")
+//import spms.dao.MemberDao;
+
+@WebServlet(value = "/auth/login")
 public class LoginServlet extends HttpServlet {
+
+	private static final long serialVersionUID = 1L;
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) 
 		throws ServletException, IOException {
 
-		RequestDispatcher rd = req.getRequestDispatcher("/auth/LoginForm.jsp");
+		RequestDispatcher rd = req.getRequestDispatcher("./LoginForm.jsp");
 		rd.forward(req, res);
 	}
 
@@ -36,22 +39,23 @@ public class LoginServlet extends HttpServlet {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		
+		MemberDto memberDto = null;
+
 		String sql = "";
 		String name = "";
 		int colIndex = 1;
-		
-		sql += "SELECT MNAME, EMAIL"
-			+ " FROM MEMBERS"
-			+ " WHERE EMAIL = ?"
+
+		sql += "SELECT MNAME, EMAIL" 
+			+ " FROM MEMBERS" 
+			+ " WHERE MID = ?" 
 			+ " AND PWD = ?";
 
 		try {
 			String mid = req.getParameter("mid");
 			String pwd = req.getParameter("pwd");
-			
+
 			ServletContext sc = this.getServletContext();
-			conn = (Connection)sc.getAttribute("conn");
+			conn = (Connection) sc.getAttribute("conn");
 
 			pstmt = conn.prepareStatement(sql);
 
@@ -60,28 +64,32 @@ public class LoginServlet extends HttpServlet {
 
 			rs = pstmt.executeQuery();
 			
+			HttpSession session = req.getSession();
+
 			if (rs.next()) {
-				mid = rs.getString("mid");
 				name = rs.getString("mname");
 
-//				MemberDto memberDto = new MemberDto();
-//
-//				memberDto.setEmail(mid);
-//				memberDto.setName(name);
-			}
-			
-//			HttpSession session = req.getSession();
-			
-//			session.setAttribute("member", memberDto);
-			
-			res.sendRedirect("/board/list");
+				memberDto = new MemberDto();
 
+				memberDto.setId(mid);
+				memberDto.setName(name);
+				session.setAttribute("memberDto", memberDto);
+				session.setAttribute("loginCheck", true);
+				session.setAttribute("mid", memberDto.getId());
+
+				res.sendRedirect("../board/list");
+				
+			} else {
+				session.setAttribute("loginCheck", false);
+				RequestDispatcher rd = req.getRequestDispatcher("./LoginForm.jsp");
+				rd.forward(req, res);
+			} 
+				
 		} catch (Exception e) {
 			e.printStackTrace();
-			
-			throw new ServletException(e);
+
 		} finally {
-			
+
 			try {
 				if (pstmt != null) {
 					pstmt.close();
@@ -89,12 +97,8 @@ public class LoginServlet extends HttpServlet {
 				
 			} catch (SQLException e) {
 				e.printStackTrace();
+				
 			}
-			
 		}
-	} 
-	public void keepLoginStatusFnc() {
-		
 	}
-
 }
