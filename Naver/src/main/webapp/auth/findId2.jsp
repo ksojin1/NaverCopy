@@ -71,21 +71,39 @@
 		<hr color="lightgray" width='100%' style="margin-top: 0px; 
 		float: left; margin-bottom: 10px;">
 
-		<span style="font-size: 14px;">찾으려는 아이디를 선택해 주세요.</span>
-		<div style="margin: 25px 0px 25px 0px; border: 1px solid #888; height: 65px;">
-			<span>네이버 아이디</span>
-		</div>
-
-		<div style="margin: 25px 0px 25px 0px; border: 1px solid #888; height: 65px;">
-			<span style="height: 65px;">로그인 전용 아이디</span>
-		</div>
-
-		<div style="margin: 25px 0px 25px 0px; border: 1px solid #888; height: 65px;">
-			<span style="height: 65px;">단체 아이디</span>
+		<span style="font-size: 14px;">아이디 찾는 방법을 선택해 주세요.</span>
+		
+		<div style="position: relative; z-index: 100; 
+			padding: 39px 40px 20px; border: 1px solid #e5e5e5;">
+			<div>
+				
+				<label for="together" style="margin-right: 200px; 
+					font-size: 14px; color: #333; cursor: pointer;">
+					<input type="radio" id="together" checked="checked">
+					<strong>회원정보에 등록한 휴대전화로 인증</strong>
+				</label>
+				<p style="font-size: 12px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					회원정보에 등록한 휴대전화 번호와 입력한 휴대전화 번호가 같아야, 
+					인증번호를 받을 수 있습니다.</p>
+			</div>
+			
+			<div>
+				<span style="font-size: 12px;">
+				<strong>이름&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</strong>
+				<input type="text" style="width: 200px; height: 20px;"></span>
+			</div>
+			<div>
+				<span style="font-size: 12px;">
+					<strong>휴대전화&nbsp;</strong>
+					<select style="width: 70px; height: 20px; font-size: 12px;">
+					<option value="82">+82</option></select>
+				</span><input type="text" style="width: 160px; height: 20px;">
+			</div>
+		alert()	<%=request.getAttribute("mid")%>
+			
+	
 		</div>
 	</div>
-
-
 </body>
 
 </html>

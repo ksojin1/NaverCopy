@@ -92,10 +92,10 @@
 <body>	
 	<div id='container'>
 		<div id='titleDiv'>
-			<h2 id='boardTitle'>게시판 목록</h2>
+			<h2 id='boardTitle'>내 게시글 목록</h2>
 			<div id='userDiv'>
 				<span id='userId'>${memberDto.getId()}</span>
-				<a class='btn' id='myListViewBtn' href='./myList?id=${memberDto.getId()}'>내게시글</a>
+				<a class='btn' id='listViewBtn' href='./list'>전체목록보기</a>
 				<a class='btn' id='loginBtn' href='../auth/logout'>로그아웃</a>
 			</div>
 		</div>
@@ -117,7 +117,6 @@
 			</table>
 			<a class='btn' id='addBtn' href='./add'>추가</a>
 		</div>
-		
 	</div>
 </body>
 </html>

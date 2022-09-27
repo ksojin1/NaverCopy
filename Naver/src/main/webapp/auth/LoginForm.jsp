@@ -81,11 +81,6 @@
 				event.preventDefault();
 				alertMessageObj.style.visibility = 'visible';
 				alertMessageObj.innerHTML = '<strong>비밀번호</strong>를 입력해주세요.';
-			} else {
-				alertMessageObj.style.visibility = 'visible';
-// 				alertMessageObj.innerHTML = 
-// 					'아이디(로그인 전용 아이디) 또는 비밀번호를 잘못 입력했습니다.'
-// 					+ '<br>입력하신 내용을 다시 확인해주세요.';
 			}
 		});
 	}
@@ -95,7 +90,7 @@
 
 <body>
 <div>
-	
+	${memberDto.id}
 	<div id='mainLogo'>
 		<a href="./login" 
 			title="메인으로 이동" target="_self">
@@ -126,11 +121,10 @@
 					cursor: pointer;">IP보안</span>
 			</div>
 			
-			<span id="alertMessage" style="visibility:hidden">아이디(로그인 전용 아이디) 또는 비밀번호를 잘못 입력했습니다.'
- 					<br>입력하신 내용을 다시 확인해주세요.</span>
-<%-- 			<c:if test='${memberDto.id == null}'> --%>
-<!-- 				<span id="alertMessage"></span> -->
-<%-- 			</c:if> --%>
+<!-- 			<span id="alertMessage" style="visibility:hidden">아이디(로그인 전용 아이디) 또는 비밀번호를 잘못 입력했습니다.' -->
+<!--  					<br>입력하신 내용을 다시 확인해주세요.</span> -->
+			<span id="alertMessage"><%=request.getAttribute("loginCkStr")%></span>
+			
 			
 			<br>
 			<br>
@@ -143,9 +137,9 @@
 	
 	<div>
 		<ul id="otherLoginMethodList">
-			<li><a href="./findPwd.jsp">비밀번호 찾기</a>&nbsp;</li>
+			<li><a href="#">비밀번호 찾기</a>&nbsp;</li>
 			<li>I</li>
-			<li><a href="./findId.jsp">아이디 찾기</a>&nbsp;</li>
+			<li><a href="./findId">아이디 찾기</a>&nbsp;</li>
 			<li>I</li>
 			<li><a href="../member/add">회원가입</a></li>
 		</ul>

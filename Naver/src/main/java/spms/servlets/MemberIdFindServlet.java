@@ -15,82 +15,66 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import javafx.scene.web.WebHistory;
 import spms.dto.MemberDto;
 
-//import spms.dao.MemberDao;
-
-@WebServlet(value = "/auth/login")
-public class LoginServlet extends HttpServlet {
+@WebServlet(value = "/auth/findId")
+public class MemberIdFindServlet extends HttpServlet{
 
 	private static final long serialVersionUID = 1L;
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) 
 		throws ServletException, IOException {
-
-		req.setAttribute("loginCkStr","");
-		
-		RequestDispatcher rd = req.getRequestDispatcher("./LoginForm.jsp");
+	
+		RequestDispatcher rd = req.getRequestDispatcher("./findId.jsp");
 		rd.forward(req, res);
+	
 	}
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) 
 		throws ServletException, IOException {
-
+	
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		MemberDto memberDto = null;
 
 		String sql = "";
-		String name = "";
+		String mid = "";
 		int colIndex = 1;
 
-		sql += "SELECT MNAME, EMAIL" 
+		sql += "SELECT MID" 
 			+ " FROM MEMBERS" 
-			+ " WHERE MID = ?" 
-			+ " AND PWD = ?";
+			+ " WHERE MNAME = ?" 
+			+ " AND EMAIL = ?";
 
 		try {
-			String mid = req.getParameter("mid");
-			String pwd = req.getParameter("pwd");
+			String name = req.getParameter("name");
+			String email = req.getParameter("email");
 
 			ServletContext sc = this.getServletContext();
 			conn = (Connection) sc.getAttribute("conn");
 
 			pstmt = conn.prepareStatement(sql);
 
-			pstmt.setString(colIndex++, mid);
-			pstmt.setString(colIndex, pwd);
+			pstmt.setString(colIndex++, name);
+			pstmt.setString(colIndex, email);
 
 			rs = pstmt.executeQuery();
 			
-			HttpSession session = req.getSession();
 
 			if (rs.next()) {
-				name = rs.getString("mname");
-
-				memberDto = new MemberDto();
-
-				memberDto.setId(mid);
-				memberDto.setName(name);
-				session.setAttribute("memberDto", memberDto);
-
-				System.out.println("로그인 성공");
+				mid = rs.getString("mid");
+				System.out.println("찾음");
+				req.setAttribute("mid", mid);
 				
-				res.sendRedirect("../board/list");
+				RequestDispatcher rd = req.getRequestDispatcher("../auth/findId2.jsp");
+				rd.forward(req, res);
 				
 			} else {
-				System.out.println("로그인 실패");
-				
-				req.setAttribute("loginCkStr", 
-						"아이디(로그인 전용 아이디) 또는 비밀번호를 잘못 입력했습니다."
-						+ "<br>입력하신 내용을 다시 확인해주세요.");
-				
-				RequestDispatcher rd = req.getRequestDispatcher("./LoginForm.jsp");
-				rd.forward(req, res);
+				System.out.println("인증번호가 올바르지 않습니다. 확인 후 다시 입력해 주세요.");
+				res.sendRedirect("./FindCk.jsp");
 			} 
 				
 		} catch (Exception e) {
@@ -109,4 +93,8 @@ public class LoginServlet extends HttpServlet {
 			}
 		}
 	}
+	
 }
+	
+	
+
