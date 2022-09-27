@@ -30,10 +30,10 @@ public class MemberCheckServlet extends HttpServlet{
 			ServletContext sc = this.getServletContext();
 			conn = (Connection) sc.getAttribute("conn");
 			
-			sql = "SELECT MNO, EMAIL, MNAME, CRE_DATE";
+			sql += "SELECT MNO, EMAIL, MNAME, CRE_DATE";
 			sql += " FROM MEMBERS" + " WHERE MID = ?";
 
-			String id = req.getParameter("mid");
+			String id = req.getParameter("MID");
 			
 			pstmt = conn.prepareStatement(sql);
 
