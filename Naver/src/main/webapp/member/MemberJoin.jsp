@@ -12,32 +12,24 @@
 		</style>
 		
 		<script type="text/javascript">
-		function Fnc() {
-			var midObj = document.getElementsByName('mid').value;
-			var pwdObj = document.getElementsByName('pwd').value;
-			var chkPwdObj = document.getElementsByName('chkPwd').value;
-			var mnameObj = document.getElementsByName('mname').value;
-			var bdObj = document.getElementsByName('birthDate').value;
-			var emailObj = document.getElementsByName('email').value;
-			
-			if (midObj = '') {
-				
-			}
-		}
+		
+		
 		</script>
 		
 	</head>
 	
 	<body>
-		<form action='./join' method='post'>
+	<div>
+		<form name='joinForm' action='./join' method='post'>
 		아이디 <input type='text' name='mid'><br>
+				<p id ='chk'></p>
 		비밀번호 <input type='password' name='pwd'><br>
 		비밀번호 재확인 <input type='password' name='chkPwd'><br>
 		이름 <input type='text' name='mname'><br>
-		생년월일 <input type='text' name='birthDate'><br>
+		생년월일 <input type='text' name='birthdate'><br>
 		이메일 <input type='text' name='email'><br>
-		<input type="submit" value='가입하기' onclick="Fnc();">
-	</form>	
-		
+			<input type="submit" value='가입하기' onclick="joinFnc();">
+		</form>	
+	</div>	
 	</body>
 </html>
