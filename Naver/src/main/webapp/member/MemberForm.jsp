@@ -17,12 +17,12 @@
 		function testFnc() {
 			var must1 = document.getElementById("must1");
 			var must2 = document.getElementById("must2");
-				
+			var chk = document.getElementById('chk_plz');	
 		
 				if(must1.checked == false) {
-					alert("no");
+					chk.innerHTML = '네이버 이용약관과 개인정보 수집 및 이용에 대한 안내 모두 동의해주세요.';
 				}else if (must2.checked == false) {
-					alert("no2");
+					chk.innerHTML = '네이버 이용약관과 개인정보 수집 및 이용에 대한 안내 모두 동의해주세요.';
 				}else {
 					location.href='./join';
 				}
@@ -49,6 +49,7 @@
 				
 			}
 			
+			
 		}
 		</script>
 		
@@ -58,10 +59,11 @@
 		<div>
 			<form >
 				<input type="checkbox" id='All' onclick="chkFnc();"><br>
-				<input type="checkbox" id="must1" name="chk"><br>
-				<input type="checkbox" id="must2" name="chk"><br>
-				<input type="checkbox"  name="chk"><br>
-				<input type="checkbox"  name="chk">
+				<input type="checkbox" id="must1" name="chk">(필수)<br>
+				<input type="checkbox" id="must2" name="chk">(필수)<br>
+				<input type="checkbox"  name="chk">(선택)<br>
+				<input type="checkbox"  name="chk">(선택)
+				<p id='chk_plz'></p>
 				<input type="button" value="취소" onclick="location.href='./login'">
 				<input type="button" value="확인" onclick="testFnc();">
 			</form>

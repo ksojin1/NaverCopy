@@ -33,7 +33,7 @@ public class MemberCheckServlet extends HttpServlet{
 			sql += "SELECT MNO, EMAIL, MNAME, CRE_DATE";
 			sql += " FROM MEMBERS" + " WHERE MID = ?";
 
-			String id = req.getParameter("MID");
+			String id = req.getParameter("mid");
 			
 			pstmt = conn.prepareStatement(sql);
 
@@ -44,11 +44,15 @@ public class MemberCheckServlet extends HttpServlet{
 			HttpSession session = req.getSession();
 
 			if (rs.next()) {
-				session.setAttribute("addCheck", false);
+				req.setAttribute("addCheck", false);
+				req.setAttribute("userId", id);
+				req.setAttribute("msg", "중복입니다");
 				RequestDispatcher rd = req.getRequestDispatcher("./MemberJoin.jsp");
 				rd.forward(req, resp);
 			}else{
-				session.setAttribute("addCheck", true);
+				req.setAttribute("addCheck", true);
+				req.setAttribute("userId", id);
+				req.setAttribute("msg", "");
 				RequestDispatcher rd = req.getRequestDispatcher("./MemberJoin.jsp");
 				rd.forward(req, resp);
 			
@@ -81,12 +85,6 @@ public class MemberCheckServlet extends HttpServlet{
 		}
 	}
 	
-	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		
-		
-		
-		resp.sendRedirect("./join");
-	}
+
 	
 }

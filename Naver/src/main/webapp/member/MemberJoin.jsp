@@ -24,16 +24,19 @@
 				var nameChkObj = document.getElementById('name_plz');
 				var birthdateObj = document.getElementById('birthdate');
 				var emailObj = document.getElementById('email');
-				var spptObj = /[`~!@#$%^&*|\\\'\";:\/?]/gi;
+				var spptObj = '/[`~!@#$%^&*|\\\'\";:\/?]/gi';
 				
-				midObj.addEventListener('blur', function() {
+				
+				midObj.addEventListener('change', function() {
 					if (midObj.value == '') {
 						idChkObj.innerHTML = '필수정보입니다';
 					}else if (midObj.value.length < 5) {
 						idChkObj.innerHTML = '5~20자의 영문 소문자, 숫자와 특수기호(_),(-)만 사용 가능합니다.';
 					}else {
-						idChkObj.innerHTML = '';
+						location.href = './check?mid=' + midObj.value;
 					}
+						
+					
 				});
 				
 				pwdObj.addEventListener('blur', function() {
@@ -72,8 +75,8 @@
 	<body>
 	<div>
 		<form  action='./join' method='post'>
-		아이디 <input type='text' id='mid' name='mid'><br>
-				<p id ='id_plz'></p>
+		아이디 <input type='text' id='mid' name='mid' value="<%=request.getAttribute("userId")%>" ><br>
+				<p id ='id_plz'><%=request.getAttribute("msg")%></p>
 		비밀번호 <input type='password' id='pwd' name='pwd'><br>
 				<p id ='pwd_plz'></p>
 		비밀번호 재확인 <input type='password' id='chkPwd' name='chkPwd'><br>

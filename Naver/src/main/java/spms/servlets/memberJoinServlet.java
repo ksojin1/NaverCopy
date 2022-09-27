@@ -5,12 +5,15 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.util.Date;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.apache.taglibs.standard.tag.el.fmt.RequestEncodingTag;
 
 import spms.dto.MemberDto;
 
@@ -22,7 +25,13 @@ public class memberJoinServlet extends HttpServlet{
 	protected void doGet(HttpServletRequest req
 			, HttpServletResponse resp) throws ServletException, IOException {
 		
-		resp.sendRedirect("./MemberJoin.jsp");
+		req.setAttribute("userId", "");
+		req.setAttribute("msg", "");
+		
+		RequestDispatcher dispatcher =
+				req.getRequestDispatcher("./MemberJoin.jsp");
+		dispatcher.forward(req, resp);
+		
 	}
 	
 	@Override
