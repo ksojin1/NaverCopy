@@ -8,7 +8,36 @@
 		<title>네이버 : 회원가입</title>
 		
 		<style type="text/css">
+		body{
+			margin: 0 auto;
+		}
 		
+		#wrap{
+			width: 600px; margin: 0 auto;
+		}
+		
+		#header{
+			margin: 0 auto; text-align: center;
+		}
+		
+		}
+		.chk_plz{
+			color: red;
+		}
+		
+		.bir_yy{
+			display: table-cell;
+			table-layout: fixed;
+			width: 25%;
+		}
+		.bir_mm{
+			display: table-cell;
+			width: 25%;
+		}
+		.bir_dd{
+			display: table-cell;
+			width: 25%;
+		}
 		</style>
 		
 		<script type="text/javascript">
@@ -100,21 +129,89 @@
 	</head>
 	
 	<body>
-	<div>
-		<form  action='./join' method='post'>
-		아이디 <input type='text' id='mid' name='mid' value="<%=request.getAttribute("userId")%>" ><br>
-				<p id ='id_plz'><%=request.getAttribute("msg")%></p>
-		비밀번호 <input type='password' id='pwd' name='pwd'><br>
-				<p id ='pwd_plz'></p>
-		비밀번호 재확인 <input type='password' id='chkPwd' name='chkPwd'><br>
-				<p id ='chkPwd_plz'></p>
-		이름 <input type='text' id='mname' name='mname'><br>
-				<p id ='name_plz'></p>
-		생년월일 <input type='text' id='birthdate' name='birthdate'><br>
+		<div id='wrap'>
+		<div id='header'>
+			<h1>
+				<a href="../auth/login">
+					<img style="width: 300px; height: 100px;"  src="../auth/naver.png">
+				</a>
+			</h1>
+		</div>	
+			<form  action='./join' method='post'>
+				<div>
+					<h3>아이디</h3>
+					<span>
+					 <input type='text' id='mid' name='mid' value="<%=request.getAttribute("userId")%>" >
+				 	</span>
+				 </div>	
+				 <p id ='id_plz' class="chk_plz"><%=request.getAttribute("msg")%></p>
+				 <div>
+				 	<h3>비밀번호</h3>
+				 	<span>
+				 		<input type='password' id='pwd' name='pwd'>
+				 	</span>
+				</div>
+			 	<p id ='pwd_plz' class="chk_plz"></p>
+			 	<div>
+			 		<h3>비밀번호 재확인</h3>
+			 		<span>
+			 			<input type='password' id='chkPwd' name='chkPwd'>
+			 		</span>
+				</div>
+				<p id ='chkPwd_plz' class="chk_plz"></p>
 				
-		이메일 <input type='text' id='email' name='email'><br>
-			<input id='all_chk' type="submit" value='가입하기'>
-		</form>	
-	</div>	
+				<div>
+					<h3>이름</h3>
+					<span>
+				 		<input type='text' id='mname' name='mname'>
+					</span>
+				</div>
+				<p id ='name_plz' class="chk_plz"></p>
+				<div class="bir_wrap">
+					<h3>생년월일</h3>
+					<div class="bir_yy">
+						<span>
+							<input type="text"  placeholder="년(4자)">
+						</span>
+					</div>
+					<div class="bir_mm">
+						<span>
+							<select>
+								<option value>월</option>
+								<option value="01">1</option>
+								<option value="02">2</option>
+								<option value="03">3</option>
+								<option value="04">4</option>
+								<option value="05">5</option>
+								<option value="06">6</option>
+								<option value="07">7</option>
+								<option value="08">8</option>
+								<option value="09">9</option>
+								<option value="10">10</option>
+								<option value="11">11</option>
+								<option value="12">12</option>
+							</select>
+						</span>
+					</div>
+					<div class="bir_dd">
+						<span>
+							<input type="text" placeholder="일">
+						</span>
+					</div>
+					
+				 <input type='text' id='birthdate' name='birthdate'><br>
+				</div>	
+				<div>
+					<h3>이메일</h3>
+					<div>
+						<span>
+						 	<input type='text' id='email' name='email'>
+						</span>
+					</div>	
+				</div>
+					<input id='all_chk' type="submit" value='가입하기'>
+				</div>
+			</form>	
+		</div>	
 	</body>
 </html>
