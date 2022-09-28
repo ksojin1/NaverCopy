@@ -27,6 +27,7 @@ public class memberJoinServlet extends HttpServlet{
 		
 		req.setAttribute("userId", "");
 		req.setAttribute("msg", "");
+		req.setAttribute("addCheck", false);
 		
 		RequestDispatcher dispatcher =
 				req.getRequestDispatcher("./MemberJoin.jsp");

@@ -24,10 +24,20 @@
 				var nameChkObj = document.getElementById('name_plz');
 				var birthdateObj = document.getElementById('birthdate');
 				var emailObj = document.getElementById('email');
-				var spptObj = '/[`~!@#$%^&*|\\\'\";:\/?]/gi';
+				var spptObj = /[`~!@#$%^&*|\\\";:\/?]/gi;
+				var allchk = document.getElementById('all_chk');
 				
+				var chk1, chk2, chk3, chk4, chk5, chk6 = false;
 				
-				midObj.addEventListener('change', function() {
+				chk1 = <%=request.getAttribute("addCheck")%>;
+				
+				allchk.addEventListener('click', function(e) {
+					if (!chk1 || !chk2 || !chk3 || !chk4 || !chk5 || !chk6) {
+						e.preventDefault();
+					}
+				});
+				
+				midObj.addEventListener('blur', function() {
 					if (midObj.value == '') {
 						idChkObj.innerHTML = '필수정보입니다';
 					}else if (midObj.value.length < 5) {
@@ -42,9 +52,10 @@
 				pwdObj.addEventListener('blur', function() {
 					if (pwdObj.value == '') {
 						pwdChkObj.innerHTML = '필수정보입니다';
-					}else if (pwdObj.value.length < 8 && spptObj.test(pwdObj.value) == false) {
+					}else if (pwdObj.value.length < 8) {
 						pwdChkObj.innerHTML = '8~16자 영문 대 소문자, 숫자, 특수문자를 사용하세요.';
 					}else {
+						chk2 = true;
 						pwdChkObj.innerHTML = '';
 					}
 				});
@@ -55,6 +66,7 @@
 					}else if (pwdObj.value != chkPwdObj.value) {
 						chkPwdChkObj.innerHTML = '비밀번호가 일치하지 않습니다.';
 					}else if (pwdObj.value = chkPwdObj.value) {
+						chk3 = true;
 						chkPwdChkObj.innerHTML = '';
 					}	
 				});
@@ -63,7 +75,22 @@
 					if (mnameObj.value == '') {
 						nameChkObj.innerHTML = '필수정보입니다';
 					}else {
+						chk4 = true;
 						nameChkObj.innerHTML = '';
+					} 
+				});
+				
+				birthdateObj.addEventListener('blur', function() {
+					if (birthdateObj.value == '') {
+					}else {
+						chk5 = true;
+					} 
+				});
+				
+				emailObj.addEventListener('blur', function() {
+					if (emailObj.value == '') {
+					}else {
+						chk6 = true;
 					} 
 				});
 			}
@@ -86,7 +113,7 @@
 		생년월일 <input type='text' id='birthdate' name='birthdate'><br>
 				
 		이메일 <input type='text' id='email' name='email'><br>
-			<input type="submit" value='가입하기'>
+			<input id='all_chk' type="submit" value='가입하기'>
 		</form>	
 	</div>	
 	</body>

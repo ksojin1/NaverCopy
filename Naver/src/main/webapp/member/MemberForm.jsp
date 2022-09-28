@@ -10,6 +10,25 @@
 		
 		<style type="text/css">
 		
+		body {
+			margin: 0 auto; background: #f5f6f7; position: relative;
+		}
+		
+		#header {
+			max-width: 768px; min-width: 460px; margin: 0 auto;
+		
+		}
+		
+		#heda {
+			margin: 0 auto; position: relative; overflow: hidden;
+		}
+		.headline {
+			font-size: 50px;
+		}
+		
+		.must_chk {
+			color: #08a600;
+		}
 		</style>
 		
 		<script type="text/javascript">
@@ -56,17 +75,29 @@
 	</head>
 	
 	<body>
+	<div id='header' role="banner">
+		<h1 id='head'>
+			<a href="../auth/login">
+				<span class='headline'>NAVER</span>
+			</a>
+		</h1>
+	
+	
 		<div>
 			<form >
-				<input type="checkbox" id='All' onclick="chkFnc();"><br>
-				<input type="checkbox" id="must1" name="chk">(필수)<br>
-				<input type="checkbox" id="must2" name="chk">(필수)<br>
+				<input type="checkbox" id='All' onclick="chkFnc();">NAVER한국어네이버 회원가입네이버 이용약관
+					, 개인정보 수집 및 이용, 위치기반서비스 이
+					<br>용약관(선택), 프로모션 정보 수신(선택)에 모두 동의합니다.<br>
+					<div></div>
+				<input type="checkbox" id="must1" name="chk" class="must_chk">(필수)<br>
+				<input type="checkbox" id="must2" name="chk" class="must_chk">(필수)<br>
 				<input type="checkbox"  name="chk">(선택)<br>
 				<input type="checkbox"  name="chk">(선택)
 				<p id='chk_plz'></p>
 				<input type="button" value="취소" onclick="location.href='./login'">
 				<input type="button" value="확인" onclick="testFnc();">
 			</form>
+			</div>
 		</div>
 	
 	</body>

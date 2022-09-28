@@ -53,7 +53,6 @@ public class MemberCheckServlet extends HttpServlet{
 				req.setAttribute("addCheck", true);
 				req.setAttribute("userId", id);
 				req.setAttribute("msg", "");
-				
 				RequestDispatcher rd = req.getRequestDispatcher("./MemberJoin.jsp");
 				rd.forward(req, resp);
 			
@@ -85,7 +84,5 @@ public class MemberCheckServlet extends HttpServlet{
 
 		}
 	}
-	
-
 	
 }
