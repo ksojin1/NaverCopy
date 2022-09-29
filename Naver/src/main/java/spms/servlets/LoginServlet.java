@@ -2,9 +2,6 @@ package spms.servlets;
 
 import java.io.IOException;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -15,10 +12,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import javafx.scene.web.WebHistory;
+import spms.dao.AuthDao;
 import spms.dto.MemberDto;
-
-//import spms.dao.MemberDao;
 
 @WebServlet(value = "/auth/login")
 public class LoginServlet extends HttpServlet {
@@ -40,20 +35,9 @@ public class LoginServlet extends HttpServlet {
 		throws ServletException, IOException {
 
 		Connection conn = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
 		MemberDto memberDto = null;
-		RequestDispatcher rd =null;
-
-		String sql = "";
-		String name = "";
-		int colIndex = 1;
-
-		sql += "SELECT MNAME, EMAIL" 
-			+ " FROM MEMBERS" 
-			+ " WHERE MID = ?" 
-			+ " AND PWD = ?";
-
+		RequestDispatcher rd = null;
+		
 		try {
 			String mid = req.getParameter("mid");
 			String pwd = req.getParameter("pwd");
@@ -61,22 +45,14 @@ public class LoginServlet extends HttpServlet {
 			ServletContext sc = this.getServletContext();
 			conn = (Connection) sc.getAttribute("conn");
 
-			pstmt = conn.prepareStatement(sql);
-
-			pstmt.setString(colIndex++, mid);
-			pstmt.setString(colIndex, pwd);
-
-			rs = pstmt.executeQuery();
+			AuthDao authDao = new AuthDao();
+			authDao.setConnection(conn);
 			
-			HttpSession session = req.getSession();
+			memberDto = authDao.loginCheck(mid, pwd);
 
-			if (rs.next()) {
-				name = rs.getString("mname");
-
-				memberDto = new MemberDto();
-
-				memberDto.setId(mid);
-				memberDto.setName(name);
+			if (memberDto != null) {
+				
+				HttpSession session = req.getSession();
 				session.setAttribute("memberDto", memberDto);
 
 				System.out.println("로그인 성공");
@@ -96,18 +72,6 @@ public class LoginServlet extends HttpServlet {
 				
 		} catch (Exception e) {
 			e.printStackTrace();
-
-		} finally {
-
-			try {
-				if (pstmt != null) {
-					pstmt.close();
-				}
-				
-			} catch (SQLException e) {
-				e.printStackTrace();
-				
-			}
-		}
+		} 
 	}
 }

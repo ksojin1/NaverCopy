@@ -9,12 +9,12 @@
 
 <style type="text/css">
 	#mainLogo {
-		display: inline-block; margin-top: 108px; vertical-align: top;
+		margin-top: 108px; padding-bottom: 48px; text-align: center;
 	}
 		
 	#titleForm {
-		border: 1px solid #222; text-align: center; width: 460px; 
-		height: 300px; margin: 0 auto;
+		border: 1px solid #BDBDBD; text-align: center; width: 460px; 
+		margin: 0 auto; padding-bottom: 20px;
 	}
 	
 	#loginMethodList {
@@ -29,49 +29,43 @@
 		text-decoration: none; color: #333333;
 	}
 	
-	#otherLoginMethodList {
-		display: inline-block; font-size: 14px; color: #888; 
-		text-decoration: none; text-align: center;
-	}
+ 	#otherLoginMethod { 
+ 		text-align: center;
 	
-	#otherLoginMethodList>li {
-		display: inline-block; font-size: 14px; color: #888;
-		text-decoration: none; text-align: center;
 	}
-	
-	#otherLoginMethodList>li>a {
-		display: inline-block; font-size: 14px;
-		color: #888; text-decoration: none;
-	}
-	
-	#boxSizeAjdust1 {
-		width: 400px; height: 40px;
-		font-size: 16px; cursor: pointer;
-	}
-	
-	#boxSizeAjdust2 {
+	.idTextBox {
 		width: 400px; height: 40px; font-size: 16px; cursor: pointer;
 	}
-	
-	#loginBtnSizeAjdust {
+	.loginBtnShape {
 		width: 400px; height: 50px; font-size: 18px; font-weight: bold;
-		background-color: #03C75A; color: #fff;
-		margin-bottom: 5px;
+		background-color: #03C75A; color: #fff; border: thin;
+		margin-bottom: 5px; 
 	}
-	
 	#alertMessage {
-		font-size: 14px; color: #FF003E; text-align: left;
+		font-size: 13px; color: #FF003E; text-align: left; padding-left: 30px;
+	}
+	#otherLoginMethodList {
+		display: inline-block; font-size: 14px; color: #888; 
+		text-decoration: none; padding: 0px;
+	}
+	#otherLoginMethodList > li {
+		display: inline-block; font-size: 14px; color: #888;
+		text-decoration: none;
+	}
+	#otherLoginMethodList > li > a {
+		display: inline-block; font-size: 14px; color: #888; 
+		text-decoration: none;
 	}
 </style>
 
 <script type="text/javascript">
 	window.onload = function() {
-		var idObj = document.getElementById('boxSizeAjdust1');
-		var pwdObj = document.getElementById('boxSizeAjdust2');
+		var idObj = document.getElementById('idBox');
+		var pwdObj = document.getElementById('pwdBox');
 		var alertMessageObj = document.getElementById('alertMessage');
-		var loginBtnSizeAjdustObj = document.getElementById('loginBtnSizeAjdust');
+		var loginBtnObj = document.getElementById('loginBtn');
 		
-		loginBtnSizeAjdustObj.addEventListener('click', function() {
+		loginBtnObj.addEventListener('click', function() {
 			if (idObj.value == '') {
 				event.preventDefault();
 				alertMessageObj.style.visibility = 'visible';
@@ -89,62 +83,59 @@
 </head>
 
 <body>
-<div>
-	${memberDto.id}
-	<div id='mainLogo'>
-		<a href="./login" 
-			title="메인으로 이동" target="_self">
-		<img src="./NaverLoginLogo.png" alt=""></a>
-	</div>
-	
-	<div id='titleForm'>
-		<form action="./login" method="post">
-			<div>
-				<ul id='loginMethodList'>
-					<li><a href="./login">ID 로그인</a>&nbsp;</li>
-					<li><a href="./singleUsePwd.jsp">일회용 번호</a>&nbsp;</li>
-					<li><a href="./scanQrCode.jsp">QR코드</a></li>
-				</ul>
-			</div>
-			
-			<div>
-				<input type="text" name="mid" id="boxSizeAjdust1" placeholder="아이디">
-			<br>
-				<input type="password" name="pwd" id="boxSizeAjdust2" placeholder="비밀번호">
-			</div>
-
-			<div style="margin-top: 5px;">
-				<label for="together" style="margin-right: 200px; font-size: 14px; 
-					color: #888; cursor: pointer;">
-				<input type="checkbox" id="together">로그인 상태 유지</label>&nbsp;&nbsp;&nbsp;&nbsp;
-				<span onclick="ipProtectFnc();" style="font-size: 14px; color: #888; 
-					cursor: pointer;">IP보안</span>
-			</div>
-			
-<!-- 			<span id="alertMessage" style="visibility:hidden">아이디(로그인 전용 아이디) 또는 비밀번호를 잘못 입력했습니다.' -->
-<!--  					<br>입력하신 내용을 다시 확인해주세요.</span> -->
-			<span id="alertMessage"><%=request.getAttribute("loginCkStr")%></span>
-			
-			
-			<br>
-			<br>
-
-			<div>
-				<input type="submit" id="loginBtnSizeAjdust" value="로그인">
-			</div>
-		</form>
-	</div>
-	
 	<div>
-		<ul id="otherLoginMethodList">
-			<li><a href="#">비밀번호 찾기</a>&nbsp;</li>
-			<li>I</li>
-			<li><a href="./findId">아이디 찾기</a>&nbsp;</li>
-			<li>I</li>
-			<li><a href="../member/add">회원가입</a></li>
-		</ul>
+		<div id='mainLogo'>
+			<a href="./login" title="메인으로 이동" target="_self">
+				<img src="./NaverLoginLogo.png" alt=""></a>
+		</div>
+		
+		<div id='titleForm'>
+			<form action="./login" method="post">
+				<div>
+					<ul id='loginMethodList'>
+						<li><a href="./login">ID 로그인</a>&nbsp;</li>
+						<li><a href="#">일회용 번호</a>&nbsp;</li>
+						<li><a href="#">QR코드</a></li>
+					</ul>
+				</div>
+				
+				<div>
+					<input type="text" name="mid" id="idBox" 
+						class="idTextBox" placeholder="아이디">
+				<br>
+					<input type="password" name="pwd" id="pwdBox" 
+						class="idTextBox" placeholder="비밀번호">
+				</div>
+	
+				<div style="margin-top: 5px;">
+					<label for="together" style="margin-right: 200px; 
+						font-size: 14px; color: #888; cursor: pointer;">
+					<input type="checkbox" id="together">로그인 상태 유지</label>
+						&nbsp;&nbsp;&nbsp;&nbsp;
+					<span style="font-size: 14px; color: #888; 
+						cursor: pointer;">IP보안</span>
+				</div>
+				<p id="alertMessage">
+					<%=request.getAttribute("loginCkStr")%></p>
+				<br>
+				
+				<div>
+					<input type="submit" id="loginBtn" 
+						class="loginBtnShape" value="로그인">
+				</div>
+			</form>
+		</div>
+		
+		<div id="otherLoginMethod">
+			<ul id="otherLoginMethodList">
+				<li><a href="#">비밀번호 찾기</a>&nbsp;&nbsp;</li>
+				<li>I&nbsp;&nbsp;</li>
+				<li><a href="./findId">아이디 찾기</a>&nbsp;&nbsp;</li>
+				<li>I&nbsp;&nbsp;</li>
+				<li><a href="../member/add">회원가입</a></li>
+			</ul>
+		</div>
 	</div>
-</div>
 </body>
 
 </html>

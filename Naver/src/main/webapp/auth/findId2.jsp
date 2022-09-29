@@ -43,9 +43,9 @@
 			} else if (emailObj.value == '') {
 				event.preventDefault();
 				alert("이메일 주소를 정확하게 입력해 주세요.");
-			}
-
+			} 
 		});
+		
 		function aNh1() {
 			console.log('in');
 			if(radioSelectObj[0].checked == true) {
@@ -188,6 +188,7 @@
 				<input type="text" id="nameTable" name="name"
 					style="width: 217px; height: 20px;"></span>
 			</div>
+			
 			<div>
 				<span style="font-size: 12px;">
 					<strong>이메일 주소&nbsp;&nbsp;</strong></span>
