@@ -52,7 +52,7 @@ public class BoardDeleteServlet extends HttpServlet{
 				System.out.println("게사판 삭제 실패");
 			}
 			
-			res.sendRedirect("./list");
+			res.sendRedirect("./list?num=0");
 			
 			
 		} catch (Exception e) {

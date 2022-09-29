@@ -95,7 +95,7 @@
 			<h2 id='boardTitle'>내 게시글 목록</h2>
 			<div id='userDiv'>
 				<span id='userId'>${memberDto.getId()}</span>
-				<a class='btn' id='listViewBtn' href='./list'>전체목록보기</a>
+				<a class='btn' id='listViewBtn' href='./list?num=0'>전체목록보기</a>
 				<a class='btn' id='loginBtn' href='../auth/logout'>로그아웃</a>
 			</div>
 		</div>
@@ -103,8 +103,8 @@
 		<div id='listTableDiv'>
 			<table>
 				<tr id='tableHeader'>
-					<td width="80px">No</td><td>제목</td>
-					<td width="200px">날짜</td><td width="150px">등록자</td>
+					<th width="80px">No</th><th>제목</th>
+					<th width="200px">날짜</th><th width="150px">등록자</th>
 				</tr>
 				<c:forEach var="boardDto" items="${boardList}">
 					<tr>
@@ -115,6 +115,19 @@
 					</tr>
 				</c:forEach>
 			</table>
+			
+			<div id='pageNav'>
+			<% 
+				int maxList = (int)request.getAttribute("maxNum");
+				for(int j=1, i=0; i<maxList; i++){
+					if(i%10 == 0){%>
+						<a href='./myList?id=${memberDto.getId()}&num=<%=i%>'><%=j%></a>
+						<%j++;
+					}
+				}
+			%>
+			</div>
+			
 			<a class='btn' id='addBtn' href='./add'>추가</a>
 		</div>
 	</div>

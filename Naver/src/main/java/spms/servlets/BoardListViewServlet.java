@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import spms.dao.BoardDao;
 import spms.dto.BoardDto;
 
 @WebServlet(value="/board/list")
@@ -31,14 +32,20 @@ public class BoardListViewServlet extends HttpServlet{
 		PreparedStatement pstmt = null;
 		String sql = "";
 		ResultSet rs = null;
+		int pageNum = 0;
 		
 		try {
 			
 			ServletContext sc = this.getServletContext();
 			conn = (Connection)sc.getAttribute("conn");
 			
+			pageNum = Integer.parseInt(req.getParameter("num"));
+			
 			sql = "SELECT BNO, MID, TITLE, CONTENT, CRE_DATE, MOD_DATE" 
-					+ " FROM BOARD" + " ORDER BY BNO ASC";
+					+ " FROM (SELECT ROWNUM AS RN, BOARD.* FROM BOARD ORDER BY BNO DESC)"
+					+ " WHERE RN >= " + (pageNum + 1)
+					+ " AND RN <= " + (pageNum + 10)
+					+ " ORDER BY BNO ASC";
 
 			pstmt = conn.prepareStatement(sql);
 			
@@ -62,19 +69,22 @@ public class BoardListViewServlet extends HttpServlet{
 				modDate = rs.getDate("MOD_DATE");
 				
 				BoardDto boardDto = 
-						new BoardDto(no, mId, title, content, creDate, modDate);
+						new BoardDto(no, mId, title, 
+								content, creDate, modDate);
 				
 				boardList.add(boardDto);
 			}
 			
+			BoardDao boardDao = new BoardDao();
+			boardDao.setConnection(conn);
+			int maxNum = boardDao.boardListMaxNum();
 			
+			req.setAttribute("maxNum", maxNum);
 			req.setAttribute("boardList", boardList);
 			
 			RequestDispatcher dispatcher =
 					req.getRequestDispatcher("./BoardListView.jsp");
-			
 			dispatcher.forward(req, res);
-			
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -84,7 +94,7 @@ public class BoardListViewServlet extends HttpServlet{
 			if (rs != null) {
 				try {
 					rs.close();
-				} catch (SQLException e) {
+				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}

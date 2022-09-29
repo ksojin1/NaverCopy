@@ -133,7 +133,7 @@ public class BoardUpdateServlet extends HttpServlet{
 				System.out.println("게시판 수정 실패");
 			}
 			
-			res.sendRedirect("./list");
+			res.sendRedirect("./list?num=0");
 			
 			
 		} catch (Exception e) {

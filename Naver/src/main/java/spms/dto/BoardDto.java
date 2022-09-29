@@ -4,6 +4,7 @@ import java.util.Date;
 
 public class BoardDto {
 	
+	private int rowNum = 0;
 	private int no = 0;
 	private String userId = "";
 	private String title = "";
@@ -16,6 +17,17 @@ public class BoardDto {
 		super();
 	}
 
+	public BoardDto(int rowNum, int no, String userId, String title, String content, Date createDate,
+			Date modifiedDate) {
+		super();
+		this.rowNum = rowNum;
+		this.no = no;
+		this.userId = userId;
+		this.title = title;
+		this.content = content;
+		this.createDate = createDate;
+		this.modifiedDate = modifiedDate;
+	}
 
 	public BoardDto(int no, String userId, String title, String content, Date createDate, Date modifiedDate) {
 		super();
@@ -36,6 +48,13 @@ public class BoardDto {
 		this.content = content;
 	}
 
+	public int getRowNum() {
+		return rowNum;
+	}
+
+	public void setRowNum(int rowNum) {
+		this.rowNum = rowNum;
+	}
 
 	public int getNo() {
 		return no;
