@@ -130,7 +130,8 @@
 					<li>
 						<span>
 							<input type="checkbox" id='all' onclick="chkFnc();">
-							<label for="all" style="font-weight: bolder; text-decoration: underline;">
+							<label for="all" style="font-weight: bolder;
+							 text-decoration: underline; padding-left: 25px;">
 								NAVER한국어네이버 회원가입네이버 이용약관, 개인정보 수집 및 이용, 
 								위치기반서비스 이용약관(선택), 프로모션 정보 수신(선택)에 모두 동의합니다.
 							</label>
@@ -139,7 +140,8 @@
 					<li>	
 						<span>
 							<input type="checkbox" id="must1" name="chk" class="must_chk">
-							<label for='must1' style="color: black;">네이버 이용약관 동의
+							<label for='must1' style="color: black; font-weight: bolder;">
+							네이버 이용약관 동의
 								<span class="need">
 									(필수)
 								</span>
@@ -159,7 +161,8 @@
 					<li>	
 						<span>
 							<input type="checkbox" id="must2" name="chk" class="must_chk">
-							<label for="must2">개인정보 수집 및 이용 동의	
+							<label for="must2" style="font-weight: bolder;">
+							개인정보 수집 및 이용 동의	
 								<span class="need">
 								(필수)
 								</span>
@@ -180,8 +183,9 @@
 					<li>	
 						<span>
 							<input id='choiceOne' class="chkBox" type="checkbox"  name="chk">
-							<label for='choiceOne'>위치기반서비스 이용약관 동의
-								<span>
+							<label for='choiceOne' style="font-weight: bolder;">
+							위치기반서비스 이용약관 동의
+								<span style="font-weight: normal; color: gray;">
 								(선택)
 								</span>
 							</label>
@@ -203,8 +207,9 @@
 					<li>	
 						<span>
 							<input id='choiceTwo' class="chkBox" type="checkbox"  name="chk">
-							<label for="choiceTwo">프로모션 정보 수신 동의
-								<span>
+							<label for="choiceTwo" style="font-weight: bolder;">
+							프로모션 정보 수신 동의
+								<span style="font-weight: normal; color: gray;">
 								(선택)
 								</span>
 							</label>

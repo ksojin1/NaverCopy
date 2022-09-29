@@ -58,8 +58,19 @@ public class memberJoinServlet extends HttpServlet{
 			String id = req.getParameter("mid");
 			String pwd = req.getParameter("pwd");
 			String name = req.getParameter("mname");
-			String birthdate = req.getParameter("birthdate");
+			String year = req.getParameter("yy");
+			String month = req.getParameter("mm");
+			String day = req.getParameter("dd");
 			String email = req.getParameter("email");
+			
+			if (month.length() == 1) {
+				month = "0" + month;
+			}
+			if (day.length() == 1) {
+				day = "0" + day;
+			}
+			
+			String birthdate = year + month + day;
 			
 			memberDto.setId(id);
 			memberDto.setName(name);
@@ -84,6 +95,7 @@ public class memberJoinServlet extends HttpServlet{
 			
 
 			result = pstmt.executeUpdate();
+			System.out.println("회원가입 성공");
 			if(result == 0) {
 				System.out.println("회원가입 실패");
 			}

@@ -46,7 +46,7 @@ public class MemberCheckServlet extends HttpServlet{
 			if (rs.next()) {
 				req.setAttribute("addCheck", false);
 				req.setAttribute("userId", id);
-				req.setAttribute("msg", "중복입니다");
+				req.setAttribute("msg", "이미 존재하는 아이디 입니다.");
 				RequestDispatcher rd = req.getRequestDispatcher("./MemberJoin.jsp");
 				rd.forward(req, resp);
 			}else{
