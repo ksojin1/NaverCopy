@@ -65,7 +65,7 @@
 		bottom: 0px;
 	}
 	
-	#listTable {
+	table {
 		margin: 0px auto;
 		border-collapse: collapse;
 		width: 100%;
@@ -127,7 +127,16 @@
 		margin-right: 20px;
 	}
 	
+	#listBtn{
+		position: absolute;
+		right: 0;
+		bottom: 0;
+	}
+	
 </style>
+
+<script type="text/javascript">
+</script>
 
 </head>
 <body>	
@@ -135,12 +144,12 @@
 		<div id='titleDiv'>
 			<h2 id='boardTitle'>게시판 목록</h2>
 			<div id='userDiv'>
-				<span id='userId'>${memberDto.getName()}</span>
+				<span id='userId'>${memberDto.getId()}</span>
 				<a class='btn' id='myListViewBtn' href='./myList?id=${memberDto.getId()}&num=0'>내게시글</a>
 				<a class='btn' id='loginBtn' href='../auth/logout'>로그아웃</a>
 			</div>
 		</div>
-		
+
 		<div id='searchDiv'>	
 			<form action="./search?num=0" name='search' method='get'>
 				<table id='searchTable'>
@@ -160,7 +169,7 @@
 				</table>
 			</form>
 		</div>
-		
+
 		<div id='listTableDiv'>
 			<table id='listTable'>
 				<tr id='tableHeader'>
@@ -183,7 +192,8 @@
 				int maxList = (int)request.getAttribute("maxNum");
 				for(int j=1, i=0; i<maxList; i++){
 					if(i%10 == 0){%>
-						<a class='page' href='./list?num=<%=i%>'><%=j%></a>
+						<a class='page' href='./search?search=${search}
+							&searchText=${searchText}&num=<%=i%>'><%=j%></a>
 						<%j++;
 					}
 				}
@@ -191,6 +201,8 @@
 			</div>
 			
 			<a class='btn' id='addBtn' href='./add'>추가</a>
+			
+			<a class='btn' id='listBtn' href='./list?num=0'>전체 목록 보기</a>
 		</div>
 		
 	</div>

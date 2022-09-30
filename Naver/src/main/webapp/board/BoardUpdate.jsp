@@ -107,7 +107,7 @@
 				<input class='btn' type='button' value='삭제' 
 					onclick="location.href='./delete?no=${boardDto.getNo()}';">
 				<input class='btn' type='button' value='취소' 
-					onclick="location.href='./list';">
+					onclick="location.href='./list?num=0';">
 			</div>
 		</form>
 	</div>

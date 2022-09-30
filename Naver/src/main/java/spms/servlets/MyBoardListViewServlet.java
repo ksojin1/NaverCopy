@@ -29,11 +29,9 @@ public class MyBoardListViewServlet extends HttpServlet{
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		Connection conn = null;
-		PreparedStatement pstmt = null;
-		String sql = "";
-		ResultSet rs = null;
 		String id = "";
 		int pageNum = 0;
+		int maxNum = 0;
 		
 		try {
 			
@@ -44,44 +42,14 @@ public class MyBoardListViewServlet extends HttpServlet{
 			
 			id = req.getParameter("id");
 			
-			sql = "SELECT BNO, TITLE, CONTENT, CRE_DATE, MOD_DATE" 
-					+ " FROM (SELECT ROWNUM AS RN, BOARD.* FROM BOARD "
-					+ "	WHERE MID = ?"
-					+ "	ORDER BY BNO DESC)"
-					+ " WHERE RN >= " + (pageNum + 1)
-					+ " AND RN <= " + (pageNum + 10)
-					+ " ORDER BY BNO ASC";
-
-			pstmt = conn.prepareStatement(sql);
-			
-			pstmt.setString(1,id);
-			
-			rs = pstmt.executeQuery();
-			
-			ArrayList<BoardDto> boardList = new ArrayList<>();
-			
-			int no = 0;
-			String title = "";
-			String content = "";
-			Date creDate = null;
-			Date modDate = null;
-			
-			while (rs.next()) {
-				no = rs.getInt("BNO");
-				title = rs.getString("TITLE");
-				content = rs.getString("CONTENT");
-				creDate = rs.getDate("CRE_DATE");
-				modDate = rs.getDate("MOD_DATE");
-				
-				BoardDto boardDto = 
-						new BoardDto(no, id, title, content, creDate, modDate);
-				
-				boardList.add(boardDto);
-			}
-			
 			BoardDao boardDao = new BoardDao();
 			boardDao.setConnection(conn);
-			int maxNum = boardDao.boardListMaxNum(id);
+			
+			maxNum = boardDao.boardListMaxNum("MID" ,id);
+			ArrayList<BoardDto> boardList = 
+					boardDao.myListView(pageNum, id);
+			
+			System.out.println(boardList);
 			
 			req.setAttribute("maxNum", maxNum);
 			req.setAttribute("boardList", boardList);
@@ -91,29 +59,9 @@ public class MyBoardListViewServlet extends HttpServlet{
 			
 			dispatcher.forward(req, res);
 			
-			
 		} catch (Exception e) {
-			e.printStackTrace();
-			
-		} finally {
-			
-			if (rs != null) {
-				try {
-					rs.close();
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-			
-			if (pstmt != null) {
-				try {
-					pstmt.close();
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		}
+			e.printStackTrace();		
+		} 
 	}
 	
 	@Override

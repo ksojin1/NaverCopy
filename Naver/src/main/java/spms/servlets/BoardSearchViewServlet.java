@@ -19,8 +19,8 @@ import javax.servlet.http.HttpServletResponse;
 import spms.dao.BoardDao;
 import spms.dto.BoardDto;
 
-@WebServlet(value="/board/detail")
-public class BoardDetailViewServlet extends HttpServlet{
+@WebServlet(value="/board/search")
+public class BoardSearchViewServlet extends HttpServlet{
 	
 	private static final long serialVersionUID = 1L;
 
@@ -29,24 +29,33 @@ public class BoardDetailViewServlet extends HttpServlet{
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		Connection conn = null;
-		BoardDto boardDto = null;
+		int pageNum = 0;
+		String search = "";
+		String searchText = "";
+		int maxNum = 0;
 		
 		try {
-			
-			int no = Integer.parseInt(req.getParameter("no"));
 			
 			ServletContext sc = this.getServletContext();
 			conn = (Connection)sc.getAttribute("conn");
 			
+			pageNum = Integer.parseInt(req.getParameter("num"));
+			search = req.getParameter("search");
+			searchText = req.getParameter("searchText");
+			
 			BoardDao boardDao = new BoardDao();
 			boardDao.setConnection(conn);
-			boardDto = boardDao.listDetail(no);
+			maxNum = boardDao.boardSearchMaxNum(search, searchText);
+			ArrayList<BoardDto> boardList =
+					boardDao.listSearchView(pageNum, search, searchText);
 			
-			req.setAttribute("boardDto", boardDto);
+			req.setAttribute("boardList", boardList);
+			req.setAttribute("maxNum", maxNum);
+			req.setAttribute("search", search);
+			req.setAttribute("searchText", searchText);
 			
 			RequestDispatcher dispatcher =
-					req.getRequestDispatcher("./BoardDetailView.jsp");
-			
+					req.getRequestDispatcher("./BoardSearchView.jsp");
 			dispatcher.forward(req, res);
 			
 		} catch (Exception e) {
@@ -58,6 +67,6 @@ public class BoardDetailViewServlet extends HttpServlet{
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) 
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		super.doPost(req, res);
+		
 	}
 }

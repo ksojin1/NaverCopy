@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import spms.dao.BoardDao;
 import spms.dto.BoardDto;
 import spms.dto.MemberDto;
 
@@ -27,10 +28,7 @@ public class BoardDeleteServlet extends HttpServlet{
 		// TODO Auto-generated method stub
 		
 		Connection conn = null;
-		PreparedStatement pstmt = null;
-		BoardDto boardDto = null;
-		
-		String sql = "";
+		int result = 0;
 		
 		try {
 			
@@ -39,14 +37,9 @@ public class BoardDeleteServlet extends HttpServlet{
 			ServletContext sc = this.getServletContext();
 			conn = (Connection)sc.getAttribute("conn");
 			
-			sql = "DELETE FROM BOARD";
-			sql += " WHERE BNO = ?";
-			
-			pstmt = conn.prepareStatement(sql);
-
-			pstmt.setInt(1, no);
-
-			int result = pstmt.executeUpdate();
+			BoardDao boardDao = new BoardDao();
+			boardDao.setConnection(conn);
+			result = boardDao.listDelete(no);
 			
 			if(result == 0) {
 				System.out.println("게사판 삭제 실패");
@@ -54,21 +47,9 @@ public class BoardDeleteServlet extends HttpServlet{
 			
 			res.sendRedirect("./list?num=0");
 			
-			
 		} catch (Exception e) {
-			e.printStackTrace();
-			
-		} finally {
-			
-			if (pstmt != null) {
-				try {
-					pstmt.close();
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
+			e.printStackTrace();	
 		}
-		
 	}
 	
 	@Override

@@ -13,6 +13,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import spms.dao.BoardDao;
+
 @WebServlet(value="/board/add")
 public class BoardAddServlet extends HttpServlet{
 	
@@ -31,8 +33,6 @@ public class BoardAddServlet extends HttpServlet{
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		Connection conn = null;
-		PreparedStatement pstmt = null;
-		String sql = "";
 		int result = 0;
 		
 		try {
@@ -44,39 +44,18 @@ public class BoardAddServlet extends HttpServlet{
 			ServletContext sc = this.getServletContext();
 			conn = (Connection)sc.getAttribute("conn");
 			
-			sql += "INSERT INTO BOARD";
-			sql += " VALUE(BNO, MID, TITLE, CONTENT, CRE_DATE, MOD_DATE)";
-			sql += " VALUES(BOARD_BNO_SEQ.NEXTVAL, ?, ?";
-			sql += " , ?, SYSDATE, SYSDATE)";
-
-			pstmt = conn.prepareStatement(sql);
-
-			pstmt.setString(1, mid);
-			pstmt.setString(2, title);
-			pstmt.setString(3, content);
-
-			result = pstmt.executeUpdate();
+			BoardDao boardDao = new BoardDao();
+			boardDao.setConnection(conn);
+			result = boardDao.listAdd(mid, title, content);
 			
 			if(result == 0) {
 				System.out.println("게시판 추가 실패");
 			}
 			
-			res.sendRedirect("./list");
-			
+			res.sendRedirect("./list?num=0");
 			
 		} catch (Exception e) {
 			e.printStackTrace();
-			
-		} finally {
-			
-			if (pstmt != null) {
-				try {
-					pstmt.close();
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		}
-		
+		}		
 	}
 }

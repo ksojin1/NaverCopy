@@ -101,7 +101,7 @@
 <%-- 			<div id='contentDiv'>${boardDto.content}</div> --%>
 			
 			<div id='btnDiv'>
-				<a id='backBtn' href='./list'>게시글 목록보기</a>
+				<a id='backBtn' href='./list?num=0'>게시글 목록보기</a>
 				
 				
 				<!-- 로그인 세션 완료 되면 수정 -->

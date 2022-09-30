@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import spms.dao.BoardDao;
 import spms.dto.BoardDto;
 import spms.dto.MemberDto;
 
@@ -28,12 +29,7 @@ public class BoardUpdateServlet extends HttpServlet{
 		// TODO Auto-generated method stub
 		
 		Connection conn = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
 		BoardDto boardDto = null;
-		
-		String sql = "";
-		
 		
 		try {
 			
@@ -42,28 +38,9 @@ public class BoardUpdateServlet extends HttpServlet{
 			ServletContext sc = this.getServletContext();
 			conn = (Connection)sc.getAttribute("conn");
 			
-			sql = "SELECT BNO, MID, TITLE, CONTENT";
-			sql += " FROM BOARD";
-			sql += " WHERE BNO = ?";
-			
-			pstmt = conn.prepareStatement(sql);
-
-			pstmt.setInt(1, no);
-
-			rs = pstmt.executeQuery();
-			
-			String userId = "";
-			String title = "";
-			String content = "";
-			
-			while (rs.next()) {
-				
-				userId = rs.getString("MID");
-				title = rs.getString("TITLE");
-				content = rs.getString("CONTENT");
-				
-				boardDto = new BoardDto(no, userId, title, content);
-			}
+			BoardDao boardDao = new BoardDao();
+			boardDao.setConnection(conn);
+			boardDto = boardDao.listUpdateView(no);
 			
 			req.setAttribute("boardDto", boardDto);
 			
@@ -72,29 +49,9 @@ public class BoardUpdateServlet extends HttpServlet{
 			
 			rd.forward(req, res);
 			
-			
 		} catch (Exception e) {
 			e.printStackTrace();
-			
-		} finally {
-			
-			if (rs != null) {
-				try {
-					rs.close();
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-			
-			if (pstmt != null) {
-				try {
-					pstmt.close();
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		}
+		} 
 		
 	}
 	
@@ -103,8 +60,7 @@ public class BoardUpdateServlet extends HttpServlet{
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		Connection conn = null;
-		PreparedStatement pstmt = null;
-		String sql = "";
+		int result = 0;
 		
 		try {
 			int no = Integer.parseInt(req.getParameter("no"));
@@ -112,22 +68,12 @@ public class BoardUpdateServlet extends HttpServlet{
 			String title = req.getParameter("title");
 			String content = req.getParameter("content");
 			
-			//BoardDto boardDto = new BoardDto(no, userId, title, content);
-			
 			ServletContext sc = this.getServletContext();
 			conn = (Connection)sc.getAttribute("conn");
-
-			sql += "UPDATE BOARD";
-			sql += " SET TITLE=?, CONTENT=?, MOD_DATE=SYSDATE";
-			sql += " WHERE BNO=?";
-
-			pstmt = conn.prepareStatement(sql);
-
-			pstmt.setString(1, title);
-			pstmt.setString(2, content);
-			pstmt.setInt(3, no);
-
-			int result = pstmt.executeUpdate();
+			
+			BoardDao boardDao = new BoardDao();
+			boardDao.setConnection(conn);
+			result = boardDao.listUpdate(no, title, content);
 			
 			if(result == 0) {
 				System.out.println("게시판 수정 실패");
@@ -135,20 +81,10 @@ public class BoardUpdateServlet extends HttpServlet{
 			
 			res.sendRedirect("./list?num=0");
 			
-			
 		} catch (Exception e) {
 			e.printStackTrace();
 			
-		} finally {
-			
-			if (pstmt != null) {
-				try {
-					pstmt.close();
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		}
+		} 
 		
 	}
 }
